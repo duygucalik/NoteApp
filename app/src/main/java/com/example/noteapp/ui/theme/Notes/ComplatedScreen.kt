@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 
 
 @Composable
@@ -16,7 +17,7 @@ fun ComplatedScreen (){
         modifier = Modifier.fillMaxSize(),
         verticalArrangement= Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally){
-        Text(text = "Complated" , fontSize = 50.sp)
+        Text(text = "Completed" , fontSize = 50.sp)
 
     }
 
