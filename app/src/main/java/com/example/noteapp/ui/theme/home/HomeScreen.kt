@@ -4,21 +4,26 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.service.voice.VoiceInteractionSession.ActivityId
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -27,14 +32,19 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -55,7 +65,7 @@ fun HomeScreen (navController: NavController) {
         mutableStateListOf<Notes>()
     }
     LaunchedEffect(key1 = true){
-        val n1= Notes(1,"Birinci note" , "Note 1 ")
+        val n1= Notes(1,"Birinci notefnıewnkfjnkwn klef nkw nkefn vjwnoefnvowneofvnwjovgljnwojnvoljwneıojgnowngoljnwgojwbgowjngojwnbojengwjngojnwojgn" , "Note 1 ")
         val n2= Notes(1,"İkinci note" , "Note 2 ")
         val n3= Notes(1,"Üçüncü note" ,  "Note 3 ")
         val n4= Notes(1,"Dördüncü note" ,  "Note 4 ")
@@ -78,14 +88,10 @@ fun HomeScreen (navController: NavController) {
         noteList.add(n10)
     }
 
-   /* Scaffold (
-        content = {
-
-
-        }
-
-    )*/
-
+    var expanded by rememberSaveable { mutableStateOf(false) }
+    var checked = remember {
+        mutableStateOf( false)
+    }
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -103,38 +109,35 @@ fun HomeScreen (navController: NavController) {
                         .fillMaxWidth(),
                     elevation = CardDefaults.cardElevation(10.dp)
                 ){
-                    Row(
-                        modifier = Modifier.clickable {
-                            val noteJson = Gson().toJson(note)
-                            navController.navigate("Note Detail/$noteJson")
-                        }
-                    ){
-                        Row (
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            modifier = Modifier
-                                .padding(all = 10.dp)
-                                .fillMaxWidth()
-                        ) {
-                            Column (
-                                verticalArrangement = Arrangement.SpaceEvenly,
-                                modifier = Modifier.fillMaxHeight()
-                            ) {
+                    Box (
 
-                                Text(text = note.title, fontSize = 24.sp)
-                                Text(text = note.note, fontSize = 16.sp )
+                        modifier = Modifier
+                            .clickable {
+                                val noteJson = Gson().toJson(note)
+                                navController.navigate("Note Detail/$noteJson")
                             }
-                            IconButton(
-                                onClick = {
-                                    val noteJson = Gson().toJson(note)
-                                    navController.navigate("Note Detail/$noteJson") }) {
-                                Icon(painter = painterResource(id = R.drawable.ic_detail),
-                                    contentDescription = "")
-                            }
+                    ) {
+                        Column (
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp)
+                                .padding(end = 32.dp)
+                        ) {
+                            Text(text = note.title, fontSize = 20.sp, fontFamily = FontFamily.Serif)
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(text = note.note, fontSize = 16.sp )
+
+                        }
+                        IconButton(
+                            modifier = Modifier.align(Alignment.BottomEnd),
+                            onClick = {
+                                val noteJson = Gson().toJson(note)
+                                navController.navigate("Note Detail/$noteJson") }) {
+                            Icon(painter = painterResource(id = R.drawable.ic_detail),
+                                contentDescription = "")
                         }
 
                     }
-
                 }
             }
         )

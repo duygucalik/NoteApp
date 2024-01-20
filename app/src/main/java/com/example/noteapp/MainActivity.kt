@@ -171,7 +171,7 @@ fun NoteAppTopBar(currentScreen: String, canNavigateBack: Boolean, navController
                     Icon(imageVector = Icons.Filled.Delete, contentDescription = "delete button")
                 }
             }
-            if (currentScreen == "Note Detail") {
+            if (currentScreen == "Note Detail/{note}") {
                 IconButton(onClick = {
                     Toast.makeText(
                         context,
@@ -179,7 +179,7 @@ fun NoteAppTopBar(currentScreen: String, canNavigateBack: Boolean, navController
                         Toast.LENGTH_SHORT
                     ).show()
                 }) {
-                    Icon(imageVector = Icons.Filled.Edit, contentDescription = "edit button")
+                    Icon(imageVector = Icons.Filled.Edit, contentDescription = "edit button", tint = Color.Black )
                 }
             }
 
