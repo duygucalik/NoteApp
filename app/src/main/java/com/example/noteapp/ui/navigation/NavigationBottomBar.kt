@@ -1,4 +1,4 @@
-package com.example.noteapp.ui.theme.navigation
+package com.example.noteapp.ui.navigation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
@@ -9,6 +9,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Menu
+import androidx.compose.material3.AlertDialogDefaults.containerColor
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -22,6 +23,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -32,6 +34,7 @@ import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.noteapp.R
 
@@ -40,46 +43,39 @@ import com.example.noteapp.R
 fun NavigationBottomBar(
     navController: NavHostController
 ) {
-    val items = listOf(
+    val list = listOf(
         Destination.Home,
-        Destination.Complated,
+        Destination.Done
     )
-    var selectedItemIndex =  rememberSaveable {
-        mutableStateOf(0)
+    val selectedIndex = rememberSaveable {
+        mutableIntStateOf(0)
     }
     NavigationBar(
-        modifier = Modifier.padding(10.dp).clip(RoundedCornerShape(15.dp, 15.dp, 15.dp, 15.dp)),
-        containerColor = colorResource(id = R.color.purples)
+        modifier =Modifier.clip(RoundedCornerShape(15.dp, 15.dp, 15.dp, 15.dp)),
+        containerColor= colorResource(id = R.color.purples)
     ) {
-        items.forEachIndexed { index, destination ->
+        list.forEachIndexed { index, destination ->
             NavigationBarItem(
-                label = {
-                    Text(
-                        text = destination.title,
-                        color = Color.White)
-                        },
-                selected = index == selectedItemIndex.value, // seçilen bottom u animasyon olarak gösterir
+                label = { Text(
+                    text = destination.title,
+                    color=Color.White,
+                    fontSize = 16.sp
+                ) },
+                selected = index == selectedIndex.value,
                 onClick = {
-                    selectedItemIndex.value = index
-                    navController.navigate(items[index].route) {
+                    selectedIndex.value = index
+                    navController.navigate(list[index].route) {
                         popUpTo(navController.graph.startDestinationId)
                         launchSingleTop = true
                     }
                 },
-                colors = NavigationBarItemDefaults
-                    .colors(
-                        selectedIconColor = Black
-                    ),
                 icon = {
                     Icon(
+                        tint=Color.White,
                         imageVector = destination.icon,
-                        tint = Color.White,
-                        modifier = Modifier.size(30.dp),
-                        contentDescription =destination.title,)
-
-                },
-
-            )
+                        contentDescription = destination.title
+                    )
+                })
         }
     }
 }

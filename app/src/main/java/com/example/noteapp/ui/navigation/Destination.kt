@@ -1,10 +1,11 @@
-package com.example.noteapp.ui.theme.navigation
+package com.example.noteapp.ui.navigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.rounded.Done
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -16,6 +17,7 @@ sealed class Destination(
 
 ){
     object Home : Destination("home", "Home", Icons.Filled.Home)
-    object Complated : Destination("complated", "Complated", Icons.Filled.Done)
+    object Done : Destination("done", "Done", Icons.Filled.Done)
+    object Detail : Destination("Detail", "Detail", Icons.Default.Info)
 
 }
